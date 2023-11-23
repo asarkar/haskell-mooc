@@ -10,7 +10,6 @@ Official GitHub repository: https://github.com/moocfi/haskell-mooc.
 
 ## Exercises
 
-Exercises can be found under `exercises/` directory.
 Exercises are Haskell source code files named `Set1.hs`, `Set2.hs` and so on.
 
 ## Running Tests
@@ -18,3 +17,9 @@ Exercises are Haskell source code files named `Set1.hs`, `Set2.hs` and so on.
 ```
 ./.github/run.sh [TEST FILE]
 ```
+
+## Lecture 1
+
+https://haskell.mooc.fi/part1#lecture-1-and-so-it-begins
+
+Quiz: <Quiz/Lecture1.md>

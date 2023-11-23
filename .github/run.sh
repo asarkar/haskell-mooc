@@ -4,7 +4,7 @@ set -e
 
 no_test=0
 no_lint=0
-stack_opts='--verbosity warn --stack-yaml exercises/stack.yaml'
+stack_opts='--verbosity warn --stack-yaml stack.yaml'
 
 while (( $# > 0 )); do
    case "$1" in
@@ -36,7 +36,7 @@ done
 
 tests=()
 if [[ -z "$1" ]]; then
-	tests=(exercises/*Test.hs)
+	tests=(*Test.hs)
 else
 	pattern='.*Test\.hs'
 	if [[ ! "$1" =~ $pattern ]]; then
@@ -54,6 +54,10 @@ fi
 stack build $stack_opts \
 		  --ghc-options "-Wall -Werror"
 
+if [[ -x "$(command -v ormolu)" ]]; then
+	ormolu -m "$ormolu_mode" $(find Examples Mooc -name '*.hs')
+fi
+
 green='\033[1;32m'
 no_color='\033[0m'
 for t in "${tests[@]}"; do
@@ -62,21 +66,21 @@ for t in "${tests[@]}"; do
 	if (( no_test == 0 )); then
 		# profiling https://stackoverflow.com/a/40922201/839733
 		printf "Running tests from: %b%s%b\n" "$green" "$test" "$no_color"
-		stack runhaskell $stack_opts "$test" --cwd exercises
+		stack runhaskell $stack_opts "$test"
 	fi
 
 	main="${test:0:$((${#test} - 7))}.hs"
 	if (( no_lint == 0 )); then
 		if [[ -x "$(command -v hlint)" ]]; then
-			hlint -p exercises "$main"
+			hlint "$main"
 		else
-			printf "hlint not found"
+			printf "hlint not found\n"
 		fi
 		
 		if [[ -x "$(command -v ormolu)" ]]; then
-			ormolu -m "$ormolu_mode" "exercises/$main"
+			ormolu -m "$ormolu_mode" "$main" "$test"
 		else
-			printf "ormolu not found"
+			printf "ormolu not found\n"
 		fi
 	fi
 done

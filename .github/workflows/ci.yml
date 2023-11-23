@@ -13,17 +13,17 @@ jobs:
         with:
           enable-stack: true
 
-      - name: Test
-        run: .github/run.sh --no-lint
-
       - name: 'Install HLint'
         uses: haskell-actions/hlint-setup@v2
 
-      - name: 'Install Ormolu'
+      - name: 'Test and Lint'
+        run: .github/run.sh
+
+      - name: 'Check Formatting'
         uses: haskell-actions/run-ormolu@v14
         with:
-          pattern: 'dummy'
           mode: check
-
-      - name: Lint
-        run: .github/run.sh --no-test
+          pattern: |
+            'Examples/*.hs'
+            'Mooc/*.hs'
+            '*.hs'
