@@ -21,13 +21,18 @@ import Mooc.Todo
 -- Ex 1: define variables one and two. They should have type Int and
 -- values 1 and 2, respectively.
 
+one :: Int
+one = 1
+
+two :: Int
+two = 2
 
 ------------------------------------------------------------------------------
 -- Ex 2: define the function double of type Integer->Integer. Double
 -- should take one argument and return it multiplied by two.
 
 double :: Integer -> Integer
-double x = todo
+double = (2 *)
 
 ------------------------------------------------------------------------------
 -- Ex 3: define the function quadruple that uses the function double
@@ -68,9 +73,10 @@ eeny = todo
 -- "mellon".
 
 checkPassword :: String -> String
-checkPassword password = if password == "swordfish"
-                         then "You're in."
-                         else "ACCESS DENIED!"
+checkPassword password =
+  if password == "swordfish"
+    then "You're in."
+    else "ACCESS DENIED!"
 
 ------------------------------------------------------------------------------
 -- Ex 7: A postal service prices packages the following way.

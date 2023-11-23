@@ -2,9 +2,8 @@ module Set11a where
 
 import Control.Monad
 import Data.List
-import System.IO
-
 import Mooc.Todo
+import System.IO
 
 -- Lecture 11:
 --   * The IO type
@@ -117,9 +116,10 @@ whenM cond op = todo
 
 -- used in an example
 ask :: IO Bool
-ask = do putStrLn "Y/N?"
-         line <- getLine
-         return $ line == "Y"
+ask = do
+  putStrLn "Y/N?"
+  line <- getLine
+  return $ line == "Y"
 
 while :: IO Bool -> IO () -> IO ()
 while cond op = todo

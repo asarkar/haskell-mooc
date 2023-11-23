@@ -1,4 +1,6 @@
-*~
+.DS_Store
 *.lock
-.stack-work
+install/
+.stack-work/
+stack.sqlite3*
 score.json
