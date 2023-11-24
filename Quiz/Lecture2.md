@@ -55,3 +55,5 @@ b. `a -> a -> [Just a]`
 c. `a -> b -> [Maybe a]`
 
 d. `a -> a -> [Maybe a]`
+
+**A**: `d` is the correct answer.

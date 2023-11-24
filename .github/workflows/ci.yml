@@ -24,6 +24,5 @@ jobs:
         with:
           mode: check
           pattern: |
-            'Examples/*.hs'
-            'Mooc/*.hs'
+            '*/*.hs'
             '*.hs'

@@ -29,3 +29,9 @@ Quiz: [Quiz/Lecture1.md](Quiz/Lecture1.md)
 https://haskell.mooc.fi/part1#lecture-2-either-you-die-a-hero
 
 Quiz: [Quiz/Lecture2.md](Quiz/Lecture2.md)
+
+## Lecture 3
+
+https://haskell.mooc.fi/part1#lecture-3-catamorphic
+
+Quiz: [Quiz/Lecture3.md](Quiz/Lecture3.md)
