@@ -22,4 +22,10 @@ Exercises are Haskell source code files named `Set1.hs`, `Set2.hs` and so on.
 
 https://haskell.mooc.fi/part1#lecture-1-and-so-it-begins
 
-Quiz: <Quiz/Lecture1.md>
+Quiz: [Quiz/Lecture1.md](Quiz/Lecture1.md)
+
+## Lecture 2
+
+https://haskell.mooc.fi/part1#lecture-2-either-you-die-a-hero
+
+Quiz: [Quiz/Lecture2.md](Quiz/Lecture2.md)
