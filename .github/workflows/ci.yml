@@ -16,9 +16,6 @@ jobs:
       - name: 'Install HLint'
         uses: haskell-actions/hlint-setup@v2
 
-      - name: 'Test and Lint'
-        run: .github/run.sh
-
       - name: 'Check Formatting'
         uses: haskell-actions/run-ormolu@v14
         with:
@@ -26,3 +23,12 @@ jobs:
           pattern: |
             '*/*.hs'
             '*.hs'
+
+      - name: 'Set Ormolu Path'
+        run: |
+          ORMOLU_EXEC="$(find "${{ runner.tool_cache }}/ormolu" -type f -executable -name ormolu)"
+          ORMOLU_DIR="$(dirname "$(readlink -f "$ORMOLU_EXEC")")"
+          echo "$ORMOLU_DIR" >> $GITHUB_PATH
+
+      - name: 'Test and Lint'
+        run: .github/run.sh
