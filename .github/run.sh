@@ -55,7 +55,7 @@ stack build $stack_opts \
 		  --ghc-options "-Wall -Werror"
 
 if [[ -x "$(command -v ormolu)" ]]; then
-	ormolu -m "$ormolu_mode" $(find Examples Mooc -name '*.hs')
+	ormolu -m "$ormolu_mode" $(find Examples Mooc -type f -name '*.hs')
 fi
 
 green='\033[1;32m'

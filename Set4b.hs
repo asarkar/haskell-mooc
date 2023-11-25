@@ -21,7 +21,8 @@ import Mooc.Todo
 countNothings :: [Maybe a] -> Int
 countNothings = foldr countHelper 0
 
-countHelper = todo
+countHelper :: Maybe a -> Int -> Int
+countHelper xs = (+) (maybe 1 (const 0) xs)
 
 ------------------------------------------------------------------------------
 -- Ex 2: myMaximum with a fold. Just like in the previous exercise,
@@ -35,7 +36,8 @@ myMaximum :: [Int] -> Int
 myMaximum [] = 0
 myMaximum (x : xs) = foldr maxHelper x xs
 
-maxHelper = todo
+maxHelper :: Int -> Int -> Int
+maxHelper = max
 
 ------------------------------------------------------------------------------
 -- Ex 3: compute the sum and length of a list with a fold. Define
@@ -51,9 +53,11 @@ maxHelper = todo
 sumAndLength :: [Double] -> (Double, Int)
 sumAndLength = foldr slHelper slStart
 
-slStart = todo
+slStart :: (Double, Int)
+slStart = (0.0, 0)
 
-slHelper = todo
+slHelper :: Double -> (Double, Int) -> (Double, Int)
+slHelper x (y, i) = (x + y, i + 1)
 
 ------------------------------------------------------------------------------
 -- Ex 4: implement concat with a fold. Define concatHelper and
@@ -67,9 +71,11 @@ slHelper = todo
 myConcat :: [[a]] -> [a]
 myConcat = foldr concatHelper concatStart
 
-concatStart = todo
+concatStart :: [a]
+concatStart = []
 
-concatHelper = todo
+concatHelper :: [a] -> [a] -> [a]
+concatHelper = (++)
 
 ------------------------------------------------------------------------------
 -- Ex 5: get all occurrences of the largest number in a list with a
@@ -83,7 +89,11 @@ concatHelper = todo
 largest :: [Int] -> [Int]
 largest = foldr largestHelper []
 
-largestHelper = todo
+largestHelper :: Int -> [Int] -> [Int]
+largestHelper x xs
+  | null xs || x > head xs = [x]
+  | x < head xs = xs
+  | otherwise = x : xs
 
 ------------------------------------------------------------------------------
 -- Ex 6: get the first element of a list with a fold. Define
@@ -98,7 +108,10 @@ largestHelper = todo
 myHead :: [a] -> Maybe a
 myHead = foldr headHelper Nothing
 
-headHelper = todo
+headHelper :: a -> Maybe a -> Maybe a
+-- foldr evaluates the last element first,
+-- so, we always discard it
+headHelper x _ = Just x
 
 ------------------------------------------------------------------------------
 -- Ex 7: get the last element of a list with a fold. Define lasthelper
@@ -113,4 +126,10 @@ headHelper = todo
 myLast :: [a] -> Maybe a
 myLast = foldr lastHelper Nothing
 
-lastHelper = todo
+-- HLint wants to use Data.Maybe.fromMaybe
+-- which isn't imported.
+{- HLINT ignore "Use fromMaybe" -}
+lastHelper :: a -> Maybe a -> Maybe a
+-- foldr evaluates the last element first,
+-- so, once it is not null, keep it.
+lastHelper x = Just . maybe x id

@@ -35,3 +35,15 @@ Quiz: [Quiz/Lecture2.md](Quiz/Lecture2.md)
 https://haskell.mooc.fi/part1#lecture-3-catamorphic
 
 Quiz: [Quiz/Lecture3.md](Quiz/Lecture3.md)
+
+## Lecture 4
+
+https://haskell.mooc.fi/part1#lecture-4-real-classy
+
+Quiz: [Quiz/Lecture4.md](Quiz/Lecture4.md)
+
+## Lecture 5
+
+https://haskell.mooc.fi/part1#lecture-5-you-need-string-for-a-knot
+
+Quiz: [Quiz/Lecture5.md](Quiz/Lecture5.md)
