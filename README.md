@@ -47,3 +47,9 @@ Quiz: [Quiz/Lecture4.md](Quiz/Lecture4.md)
 https://haskell.mooc.fi/part1#lecture-5-you-need-string-for-a-knot
 
 Quiz: [Quiz/Lecture5.md](Quiz/Lecture5.md)
+
+## Lecture 6
+
+https://haskell.mooc.fi/part1#lecture-6-working-class-hero
+
+Quiz: [Quiz/Lecture6.md](Quiz/Lecture6.md)

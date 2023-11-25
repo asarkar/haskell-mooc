@@ -20,15 +20,6 @@ jobs:
         uses: haskell-actions/run-ormolu@v14
         with:
           mode: check
-          pattern: |
-            '*/*.hs'
-            '*.hs'
-
-      - name: 'Set Ormolu Path'
-        run: |
-          ORMOLU_EXEC="$(find "${{ runner.tool_cache }}/ormolu" -type f -executable -name ormolu)"
-          ORMOLU_DIR="$(dirname "$(readlink -f "$ORMOLU_EXEC")")"
-          echo "$ORMOLU_DIR" >> $GITHUB_PATH
 
       - name: 'Test and Lint'
         run: .github/run.sh
