@@ -21,7 +21,8 @@ import Mooc.VeryLimitedPrelude
 --   False ||| undefined ==> an error!
 
 (|||) :: Bool -> Bool -> Bool
-x ||| y = todo
+x ||| False = x
+_ ||| True = True
 
 ------------------------------------------------------------------------------
 -- Ex 2: Define the function boolLength, that returns the length of a
@@ -35,7 +36,10 @@ x ||| y = todo
 --   length [False,undefined] ==> 2
 
 boolLength :: [Bool] -> Int
-boolLength xs = todo
+boolLength [] = 0
+boolLength (x : xs) = if x then y else y
+  where
+    y = 1 + boolLength xs
 
 ------------------------------------------------------------------------------
 -- Ex 3: Define the function validate which, given a predicate and a
@@ -49,7 +53,8 @@ boolLength xs = todo
 --   validate (\x -> undefined) 3  ==>  an error!
 
 validate :: (a -> Bool) -> a -> a
-validate predicate value = todo
+{- HLINT ignore "Redundant if" -}
+validate f v = if f v then v else v
 
 ------------------------------------------------------------------------------
 -- Ex 4: Even though we can't implement the generic seq function
@@ -83,10 +88,13 @@ class MySeq a where
   myseq :: a -> b -> b
 
 instance MySeq Bool where
-  myseq = todo
+  myseq False x = x
+  myseq True x = x
 
 instance MySeq Int where
-  myseq = todo
+  myseq 0 x = x
+  myseq _ x = x
 
 instance MySeq [a] where
-  myseq = todo
+  myseq [] x = x
+  myseq _ x = x
