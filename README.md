@@ -93,3 +93,9 @@ where `X` is the number of the exercise set.
 [fmap fmap fmap](https://haskell.mooc.fi/part2#lecture-12-fmap-fmap-fmap)
 
 [Quiz](Quiz/Lecture12.md)
+
+### Lecture 13
+
+[A Monoid in the Category of Problems](https://haskell.mooc.fi/part2#lecture-13-a-monoid-in-the-category-of-problems)
+
+[Quiz](Quiz/Lecture13.md)
