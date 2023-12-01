@@ -326,5 +326,12 @@ count = modify . inc
 --   counts <- get -- counts :: [(a,Int)]
 --   return (length counts)
 --   pure $ length currentState
+
+-- Since `count` uses the `modify` function, each invocation of `mapM_`
+-- updates the state, and the next invocation operates on the
+-- previously updated state.
+-- At the end, `mapM_ count xs` returns `State [(a, Int)] ()` but
+-- we need `State [(a, Int)] Int`. So, we run the `length <$> get` operation,
+-- which updates the value `()` to an `Int`.
 occurrences :: (Eq a) => [a] -> State [(a, Int)] Int
 occurrences xs = mapM_ count xs >> length <$> get
