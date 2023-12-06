@@ -99,3 +99,17 @@ where `X` is the number of the exercise set.
 [A Monoid in the Category of Problems](https://haskell.mooc.fi/part2#lecture-13-a-monoid-in-the-category-of-problems)
 
 [Quiz](Quiz/Lecture13.md)
+
+### Lecture 14
+
+[Let’s Use Some Libraries!](https://haskell.mooc.fi/part2#lecture-14-lets-use-some-libraries)
+
+### Lecture 15
+
+[You’re Valid Even Without Monads](https://haskell.mooc.fi/part2#lecture-15-youre-valid-even-without-monads)
+
+[Quiz](Quiz/Lecture15.md)
+
+### Lecture 16
+
+[Odds and Ends](https://haskell.mooc.fi/part2#lecture-16-odds-and-ends)

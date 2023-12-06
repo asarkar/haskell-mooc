@@ -21,8 +21,8 @@ import qualified Data.Text.Read as TR
 -- Database
 import Database.SQLite.Simple (Connection, Query (..), execute, execute_, open, query, query_)
 import Mooc.Todo
-import Network.HTTP.Types (status200)
-import Network.Wai (Application, pathInfo, responseLBS)
+import Network.HTTP.Types (Status, status200)
+import Network.Wai (Application, Response, pathInfo, responseLBS)
 import Network.Wai.Handler.Warp (run)
 import Text.Read (readMaybe)
 
@@ -74,12 +74,16 @@ getAllQuery = Query (T.pack "SELECT account, amount FROM events;")
 -- openDatabase should open an SQLite database using the given
 -- filename, run initQuery on it, and produce a database Connection.
 openDatabase :: String -> IO Connection
-openDatabase = todo
+openDatabase name = do
+  conn <- open name
+  -- execute_ does not perform query substitution.
+  execute_ conn initQuery
+  return conn
 
 -- given a db connection, an account name, and an amount, deposit
 -- should add an (account, amount) row into the database
 deposit :: Connection -> T.Text -> Int -> IO ()
-deposit = todo
+deposit conn account amount = execute conn depositQuery (account, amount)
 
 ------------------------------------------------------------------------------
 -- Ex 2: Fetching an account's balance. Below you'll find
@@ -110,7 +114,10 @@ balanceQuery :: Query
 balanceQuery = Query (T.pack "SELECT amount FROM events WHERE account = ?;")
 
 balance :: Connection -> T.Text -> IO Int
-balance = todo
+-- Haskell lacks a single-element tuple type, use Only or singleton list.
+balance conn account = do
+  xs <- query conn balanceQuery [account] :: IO [[Int]]
+  return $ (sum . concat) xs
 
 ------------------------------------------------------------------------------
 -- Ex 3: Now that we have the database part covered, let's think about
@@ -145,14 +152,18 @@ balance = todo
 --   parseCommand [T.pack "deposit", T.pack "madoff", T.pack "123456"]
 --     ==> Just (Deposit "madoff" 123456)
 
-data Command = Deposit T.Text Int | Balance T.Text
+data Command = Deposit T.Text Int | Balance T.Text | Withdraw T.Text Int
   deriving (Show, Eq)
 
 parseInt :: T.Text -> Maybe Int
 parseInt = readMaybe . T.unpack
 
 parseCommand :: [T.Text] -> Maybe Command
-parseCommand = todo
+parseCommand xs = case xs of
+  [cmd, account] | cmd == T.pack "balance" -> Just $ Balance account
+  [cmd, account, amount] | cmd == T.pack "deposit" -> Deposit account <$> parseInt amount
+  [cmd, account, amount] | cmd == T.pack "withdraw" -> Withdraw account <$> parseInt amount
+  _ -> Nothing
 
 ------------------------------------------------------------------------------
 -- Ex 4: Running commands. Implement the IO operation perform that takes a
@@ -178,7 +189,12 @@ parseCommand = todo
 --   "0"
 
 perform :: Connection -> Maybe Command -> IO T.Text
-perform = todo
+perform conn cmd = case cmd of
+  Just c -> case c of
+    Deposit account amount -> T.pack "OK" <$ deposit conn account amount
+    Balance account -> T.pack . show <$> balance conn account
+    Withdraw account amount -> T.pack "OK" <$ deposit conn account (-amount)
+  _ -> pure (T.pack "ERROR")
 
 ------------------------------------------------------------------------------
 -- Ex 5: Next up, let's set up a simple HTTP server. Implement a WAI
@@ -195,10 +211,14 @@ perform = todo
 encodeResponse :: T.Text -> LB.ByteString
 encodeResponse t = LB.fromStrict (encodeUtf8 t)
 
+respondSuccess :: T.Text -> Response
+-- Don't hardcode status 200 outside of this exercise.
+respondSuccess = responseLBS status200 [] . encodeResponse
+
 -- Remember:
 -- type Application = Request -> (Response -> IO ResponseReceived) -> IO ResponseReceived
 simpleServer :: Application
-simpleServer request respond = todo
+simpleServer _ respond = respond $ respondSuccess $ T.pack "BANK"
 
 ------------------------------------------------------------------------------
 -- Ex 6: Now we finally have all the pieces we need to actually
@@ -227,7 +247,11 @@ simpleServer request respond = todo
 -- Remember:
 -- type Application = Request -> (Response -> IO ResponseReceived) -> IO ResponseReceived
 server :: Connection -> Application
-server db request respond = todo
+server conn request respond = do
+  let path = pathInfo request
+  let cmd = parseCommand (pathInfo request)
+  result <- perform conn cmd
+  respond $ respondSuccess result
 
 port :: Int
 port = 3421
